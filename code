@@ -1,3 +1,12 @@
+#!/bin/sh
+git pull;
+curl https://www.wuyangdata.com:9999/m/shutdown -X POST;
+curl https://www.wuyangdata.com:9442/m/shutdown -X POST;
+mvn package;
+nohup java -Dspring.profiles.active=prod  -jar  /root/p/ny2/target/ny2-0.0.1-SNAPSHOT.jar  >>n2.out 2>&1 &
+nohup java -Dspring.profiles.active=test  -jar  /root/p/ny2/target/ny2-0.0.1-SNAPSHOT.jar  >>n2.out 2>&1 &
+
+
 /**
      * 绑定异常 get 请求 方法参数校验异常
      */
