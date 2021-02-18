@@ -1,3 +1,41 @@
+http://www.macrozheng.com/#/reference/efk_fluent?id=logstash-vs-fluentd
+
+http://www.macrozheng.com/#/reference/linux_command
+
+@Log
+
+@Synchronized
+当我们在多个线程中访问同一资源时，往往会出现线程安全问题，以前我们往往使用synchronized关键字修饰方法来实现同步访问。使用@Synchronized注解同样可以实现同步访问。
+
+@Component
+public class WebConfigurer extends WebMvcConfigurerAdapter {
+	@Override  
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {  
+        registry.addResourceHandler("/files/**").addResourceLocations("file:////var/resource");  
+    }
+	
+}
+
+
+@With
+使用@With注解可以实现对原对象进行克隆，并改变其一个属性，使用时需要指定全参构造方法
+@With
+@AllArgsConstructor
+public class WithExample {
+    private Long id;
+    private String name;
+    private Integer age;
+
+    public static void main(String[] args) {
+        WithExample example1 = new WithExample(1L, "test", 20);
+        WithExample example2 = example1.withAge(22);
+        //将原对象进行clone并设置age，返回false
+        System.out.println(example1.equals(example2));
+    }
+}
+
+
+
 #!/bin/sh
 git pull;
 curl https://www.wuyangdata.com:9999/m/shutdown -X POST;
