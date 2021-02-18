@@ -1,0 +1,23 @@
+/**
+     * 绑定异常 get 请求 方法参数校验异常
+     */
+    @ExceptionHandler(value = ValidationException.class)
+    @ResponseBody
+    public BaseResult validationException(HttpServletRequest request, ValidationException exception) {
+        System.out.println("GET请求入参异常" + request.getRequestURI());
+
+        //redis删除重复提交数据
+        redisKit.deleteRepeatData(request);
+
+        StringBuilder sb = new StringBuilder();
+        if (exception instanceof ConstraintViolationException) {
+            ConstraintViolationException exs = (ConstraintViolationException) exception;
+            Set<ConstraintViolation<?>> violations = exs.getConstraintViolations();
+            for (ConstraintViolation<?> item : violations) {
+                System.out.println(item.getMessage());
+                sb.append(item.getMessage()).append(" ");
+            }
+        }
+        exception.printStackTrace();
+        return Results.createIllParam(sb.toString().trim());
+    }
