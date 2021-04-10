@@ -1,3 +1,23 @@
+ @Autowired
+    private WebTestClient webClient;
+   
+    @Test
+    void testCreateOwner() throws UnsupportedEncodingException {
+        Owner o1 = new Owner(UUID.fromString("11111111-1111-1111-1111-111111111111"), "John", 
+                                "Connor", "T800 street", "Detroit", "0123456789", new HashSet<Pet>());
+        Mockito.when(ownerServices.createOwner(any())).thenReturn(Mono.just(o1));
+        
+        webClient.post()
+                 .uri("/petclinic/api/owners")
+                 .contentType(MediaType.APPLICATION_JSON)
+                 .header("Authorization", "Basic " + Base64Utils
+                         .encodeToString(("user:user").getBytes("UTF-8")))
+                 .body(BodyInserters.fromValue(o1))
+                 .exchange()
+                 .expectStatus().isCreated()
+                 .expectBody(Owner.class);
+        
+	
 求和
 	int[] data = someDataservice.retrieveAllData();
 		return Arrays.stream(data).reduce(0, (acc, value) -> acc + value);
