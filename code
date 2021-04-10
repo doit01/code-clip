@@ -1,3 +1,5 @@
+ Useful to get everything built: find . -iname pom.xml | xargs -I pom mvn -DskipTests=true -f pom install
+ 
  @Autowired
     private WebTestClient webClient;
    
