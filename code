@@ -1,9 +1,57 @@
- 
+https://github.com/daggerok/spring-data-examples
 https://github.com/Odysseymoon/spring-webflux-template/blob/master/src/main/java/moon/odyssey/webflux/config/WebFluxConfig.java
 https://github.com/Odysseymoon/spring-webflux-redis-session  --no spring security .just redis session
-
+https://github.com/jittagornp/spring-boot-reactive-example/blob/master/spring-boot-webflux-redis/src/main/java/com/pamarin/learning/webflux/controller/RedisOperationController.java
 Useful to get everything built: find . -iname pom.xml | xargs -I pom mvn -DskipTests=true -f pom install
- 
+ Flux.fromStream(this::prepareStream).delaySequence(Duration.ofMillis(100))
+                .doOnNext(person -> LOGGER.info("Server produces: {}", person)
+		
+		private Stream<Person> prepareStreamPart1() {
+		return Stream.of(
+				new Person(1, "Name01", "Surname01", 11),
+				new Person(2, "Name02", "Surname02", 22),
+				new Person(3, "Name03", "Surname03", 33)
+		);
+	}
+	return Flux.fromStream(this::prepareStreamPart1).log()
+				.mergeWith(
+						client.get().uri("/slow/" + param)
+								.retrieve()
+								.bodyToFlux(Person.class)
+								.log()
+								.publishOn(Schedulers.fromExecutor(taskExecutor))
+				);
+				
+				  public Flux<User> fetchUsers(List<Integer> userIds) {
+        return Flux.fromIterable(userIds)
+                .parallel()
+                .runOn(Schedulers.elastic())
+                .flatMap(i -> findById(i))
+                .ordered((u1, u2) -> u2.getId() - u1.getId());
+    }
+
+    private Mono<Department> getDepartmentByUserId(Integer userId){
+        return departmentRepository.findByUserId(userId);
+    }
+
+    public Mono<UserDepartmentDTO> fetchUserAndDepartment(Integer userId){
+        Mono<User> user = findById(userId).subscribeOn(Schedulers.elastic());
+        Mono<Department> department = getDepartmentByUserId(userId).subscribeOn(Schedulers.elastic());
+        return Mono.zip(user, department, userDepartmentDTOBiFunction);
+    }
+
+    private BiFunction<User, Department, UserDepartmentDTO> userDepartmentDTOBiFunction = (x1, x2) -> UserDepartmentDTO.builder()
+            .age(x1.getAge())
+            .departmentId(x2.getId())
+            .departmentName(x2.getName())
+            .userName(x1.getName())
+            .userId(x1.getId())
+            .loc(x2.getLoc())
+            .salary(x1.getSalary()).build();
+
+}
+
+
  @Autowired
     private WebTestClient webClient;
    
