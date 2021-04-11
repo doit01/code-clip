@@ -1,4 +1,8 @@
- Useful to get everything built: find . -iname pom.xml | xargs -I pom mvn -DskipTests=true -f pom install
+ 
+https://github.com/Odysseymoon/spring-webflux-template/blob/master/src/main/java/moon/odyssey/webflux/config/WebFluxConfig.java
+https://github.com/Odysseymoon/spring-webflux-redis-session  --no spring security .just redis session
+
+Useful to get everything built: find . -iname pom.xml | xargs -I pom mvn -DskipTests=true -f pom install
  
  @Autowired
     private WebTestClient webClient;
