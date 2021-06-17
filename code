@@ -1,3 +1,5 @@
+@UtilityClass
+
 https://www.cnblogs.com/piaolingzxh/p/5469035.html -大数据方案
 https://github.com/daggerok/spring-data-examples
 https://github.com/Odysseymoon/spring-webflux-template/blob/master/src/main/java/moon/odyssey/webflux/config/WebFluxConfig.java
